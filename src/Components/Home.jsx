@@ -1,22 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import Product from "./Product";
+import { db } from "../db/firebase";
+import { useEffect } from "react";
+
+//used for new way only
+import { collection, getDocs } from "firebase/firestore";
 
 const Home = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  //old way to fetch data from firebase
+  // const getProducts = () => {
+  //   db.collection("products").onSnapshot((products) =>
+  //     setProducts(
+  //       products.docs.map((doc) => ({
+  //         id: doc.id,
+  //         ...doc.data(),
+  //       }))
+  //     )
+  //   );
+  // };
+
+  //new way to fetch data from firebase
+  const getProducts = () => {
+    getDocs(collection(db, "products")).then((products) =>
+      setProducts(
+        products.docs.map((pro) => ({
+          id: pro.id,
+          ...pro.data(),
+        }))
+      )
+    );
+  };
+
   return (
     <Container>
       <Banner></Banner>
       <Content>
-        <Product
-          title="iPhone 14 128GB (Product) RED"
-          price="₹79,900"
-          src="https://m.media-amazon.com/images/W/WEBP_402378-T2/images/I/611mRs-imxL._AC_UY218_.jpg"
-        />
-        <Product
-          title="Apple iPhone 13 Pro Max, 512GB, Gold - Unlocked (Renewed)"
-          price="₹69,900"
-          src="https://m.media-amazon.com/images/I/61OgrkMY4XL._AC_UY218_.jpg"
-        />
+        {products.map((pro) => (
+          <Product {...pro} key={pro.id} />
+        ))}
       </Content>
     </Container>
   );

@@ -155,7 +155,7 @@ const NavOptionCart = styled.div`
 `;
 
 const CartCount = styled.div`
-  font-weight: 500;
-  color: #febd69;
+  font-weight: 600;
+  color: #f08804;
   font-size: small;
 `;

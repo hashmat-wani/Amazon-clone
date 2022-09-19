@@ -3,20 +3,29 @@ import styled from "styled-components";
 import StarIcon from "@material-ui/icons/Star";
 import StarHalfIcon from "@material-ui/icons/StarHalf";
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
+import { v4 as uuidv4 } from "uuid";
 
-const Product = ({ title, price, src }) => {
+const Product = ({ title, price, rating, imageUrl }) => {
+  let flag = rating % 1 !== 0 ? true : false;
+  rating = Math.floor(rating);
   return (
     <Container>
       <Title>{title}</Title>
-      <Price>{price}</Price>
+      <Price>₹ {price}</Price>
       <Rating>
-        <StarIcon style={{ fontSize: "medium" }} />
-        <StarIcon style={{ fontSize: "medium" }} />
-        <StarIcon style={{ fontSize: "medium" }} />
-        <StarHalfIcon style={{ fontSize: "medium" }} />
-        <StarOutlineIcon style={{ fontSize: "medium" }} />
+        {Array(5)
+          .fill()
+          .map((_, idx) =>
+            idx < rating ? (
+              <StarIcon key={uuidv4()} style={{ fontSize: "medium" }} />
+            ) : flag && idx == rating ? (
+              <StarHalfIcon key={uuidv4()} style={{ fontSize: "medium" }} />
+            ) : (
+              <StarOutlineIcon key={uuidv4()} style={{ fontSize: "medium" }} />
+            )
+          )}
       </Rating>
-      <Image src={src} />
+      <Image src={imageUrl} />
       <ActionSection>
         <AddToCartBtn>Add to Cart</AddToCartBtn>
       </ActionSection>
@@ -43,7 +52,6 @@ const Price = styled.span`
   margin: 5px 0;
 `;
 const Rating = styled.div`
-  font-size: large;
   color: #f90;
 `;
 
