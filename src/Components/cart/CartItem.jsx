@@ -19,7 +19,7 @@ const CartItem = ({ id, imageUrl, title, qty, price }) => {
   return (
     <Container>
       <ImageContainer>
-        <img src={imageUrl} />
+        <img alt="cart-avatar" src={imageUrl} />
       </ImageContainer>
       <CartItemInfo>
         <CartItemInfoTop>

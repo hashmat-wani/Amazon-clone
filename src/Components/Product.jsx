@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import StarIcon from "@material-ui/icons/Star";
-import StarHalfIcon from "@material-ui/icons/StarHalf";
-import StarOutlineIcon from "@material-ui/icons/StarOutline";
+import StarIcon from '@mui/icons-material/Star';
+import StarHalfIcon from '@mui/icons-material/StarHalf';
+import StarOutlineIcon from '@mui/icons-material/StarOutline';
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../db/firebase";
 import { setDoc, doc, getDoc, updateDoc, collection } from "firebase/firestore";

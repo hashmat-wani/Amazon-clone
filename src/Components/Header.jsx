@@ -1,21 +1,18 @@
 import React from "react";
 import styled from "styled-components";
-import SearchIcon from "@material-ui/icons/Search";
-import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
+import SearchIcon from "@mui/icons-material/Search";
+import ShoppingBasketIcon from "@mui/icons-material/ShoppingBasket";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Link } from "react-router-dom";
-import Login from "./Login";
-// import { useEffect } from "react";
 
 const Header = ({ cartItems, user }) => {
   const getCartCount = () => cartItems.reduce((ac, el) => ac + el.qty, 0);
 
-  const signOut = () => console.log("signedout");
   return (
     <Nav>
       <Link to="/">
         <NavLogo>
-          <img src="https://i.imgur.com/7I9Was5.png" />
+          <img alt="brand-logo" src="https://i.imgur.com/7I9Was5.png" />
         </NavLogo>
       </Link>
 
