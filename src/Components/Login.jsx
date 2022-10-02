@@ -19,7 +19,9 @@ const Login = ({ user, setUser }) => {
           phone: user.phoneNumber,
           avatar: user.photoURL,
         };
+        localStorage.setItem("user", JSON.stringify(newUser));
         setUser(newUser);
+
         nav("/");
       })
       .catch((err) => alert(err.message));
@@ -27,7 +29,10 @@ const Login = ({ user, setUser }) => {
 
   const logOut = () => {
     signOut(auth)
-      .then(() => setUser(null))
+      .then(() => {
+        localStorage.removeItem("user");
+        setUser(null);
+      })
       .catch((err) => console.log(err.message));
   };
 

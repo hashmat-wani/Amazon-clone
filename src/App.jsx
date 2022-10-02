@@ -11,7 +11,9 @@ import { useEffect } from "react";
 import Login from "./components/Login";
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
 
   const [cartItems, setCartItems] = useState([]);
   const cartColl = collection(db, "cartitems");
