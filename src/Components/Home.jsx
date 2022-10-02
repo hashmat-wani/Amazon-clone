@@ -28,9 +28,10 @@ const Home = () => {
 
   //new way to fetch data from firebase
   const getProducts = () => {
-    getDocs(collection(db, "products")).then((products) =>
+    const productsColl = collection(db, "products");
+    getDocs(productsColl).then((snapshot) =>
       setProducts(
-        products.docs.map((pro) => ({
+        snapshot.docs.map((pro) => ({
           id: pro.id,
           ...pro.data(),
         }))

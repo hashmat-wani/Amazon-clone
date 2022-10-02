@@ -4,30 +4,53 @@ import StarIcon from "@material-ui/icons/Star";
 import StarHalfIcon from "@material-ui/icons/StarHalf";
 import StarOutlineIcon from "@material-ui/icons/StarOutline";
 import { v4 as uuidv4 } from "uuid";
+import { db } from "../db/firebase";
+import { setDoc, doc, getDoc, updateDoc, collection } from "firebase/firestore";
 
-const Product = ({ title, price, rating, imageUrl }) => {
+const Product = ({ id, title, price, rating, imageUrl }) => {
   let flag = rating % 1 !== 0 ? true : false;
   rating = Math.floor(rating);
+
+  const cartColl = collection(db, "cartitems");
+
+  const addToCart = (id) => {
+    const cartItemDoc = doc(db, "cartitems", id);
+    getDoc(cartItemDoc).then((docSnap) => {
+      if (docSnap.exists()) {
+        updateDoc(cartItemDoc, { qty: docSnap.data().qty + 1 });
+      } else {
+        setDoc(doc(cartColl, id), {
+          title,
+          price,
+          imageUrl,
+          qty: 1,
+        });
+      }
+    });
+  };
+
   return (
     <Container>
       <Title>{title}</Title>
-      <Price>₹ {price}</Price>
+      <Price>
+        <small>₹</small> {price}
+      </Price>
       <Rating>
         {Array(5)
           .fill()
           .map((_, idx) =>
             idx < rating ? (
               <StarIcon key={uuidv4()} style={{ fontSize: "medium" }} />
-            ) : flag && idx == rating ? (
+            ) : flag && idx === rating ? (
               <StarHalfIcon key={uuidv4()} style={{ fontSize: "medium" }} />
             ) : (
               <StarOutlineIcon key={uuidv4()} style={{ fontSize: "medium" }} />
             )
           )}
       </Rating>
-      <Image src={imageUrl} />
+      <Image src={imageUrl} alt="ProductImage" />
       <ActionSection>
-        <AddToCartBtn>Add to Cart</AddToCartBtn>
+        <AddToCartBtn onClick={() => addToCart(id)}>Add to Cart</AddToCartBtn>
       </ActionSection>
     </Container>
   );
@@ -67,6 +90,7 @@ const ActionSection = styled.div`
 `;
 
 const AddToCartBtn = styled.button`
+  cursor: pointer;
   width: 130px;
   height: 40px;
   background-color: #f0c14b;

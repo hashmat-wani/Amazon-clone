@@ -4,12 +4,13 @@ import SearchIcon from "@material-ui/icons/Search";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { Link } from "react-router-dom";
+import Login from "./Login";
+// import { useEffect } from "react";
 
-// import Input from "@material-ui/Input";
-// or
-// import { Input } from '@mui/material';
+const Header = ({ cartItems, user }) => {
+  const getCartCount = () => cartItems.reduce((ac, el) => ac + el.qty, 0);
 
-const Header = () => {
+  const signOut = () => console.log("signedout");
   return (
     <Nav>
       <Link to="/">
@@ -21,7 +22,7 @@ const Header = () => {
       <NavOptionAddress>
         <LocationOnIcon />
         <NavOption>
-          <OptionLineOne>Hello,</OptionLineOne>
+          <OptionLineOne>Hello</OptionLineOne>
           <OptionLineTwo>Select Your Address</OptionLineTwo>
         </NavOption>
       </NavOptionAddress>
@@ -43,8 +44,12 @@ const Header = () => {
 
       <NavItems>
         <NavOption>
-          <OptionLineOne>Hello, Hashmat</OptionLineOne>
-          <OptionLineTwo>Account & Lists</OptionLineTwo>
+          <Link to="/login" style={{ textDecoration: "none" }}>
+            <OptionLineOne>
+              Hello, {user ? user.name.split(" ")[0] : "sign in"}
+            </OptionLineOne>
+            <OptionLineTwo>Account & Lists</OptionLineTwo>
+          </Link>
         </NavOption>
 
         <NavOption>
@@ -55,7 +60,7 @@ const Header = () => {
         <Link to="/cart">
           <NavOptionCart>
             <ShoppingBasketIcon />
-            <CartCount>4</CartCount>
+            <CartCount>{getCartCount()}</CartCount>
           </NavOptionCart>
         </Link>
       </NavItems>
@@ -66,7 +71,9 @@ const Header = () => {
 export default Header;
 
 const Nav = styled.div`
-  /* border: 1px solid red; */
+  position: sticky;
+  z-index: 1;
+  top: 0;
   height: 60px;
   background-color: #0f1111;
   display: flex;
@@ -91,11 +98,13 @@ const NavOptionAddress = styled.div`
 `;
 
 const OptionLineOne = styled.div`
-  /* border: 1px solid red; */
+  color: white;
 `;
 
 const OptionLineTwo = styled.div`
   font-weight: 700;
+  color: white;
+  text-decoration: none;
 `;
 
 const NavSearch = styled.div`
