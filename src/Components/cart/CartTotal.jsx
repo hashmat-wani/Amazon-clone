@@ -43,7 +43,6 @@ const Container = styled.div`
 const SubTotal = styled.div`
   font-size: 18px;
   font-weight: 500;
-  /* marg */
 `;
 
 const CheckoutBtn = styled.button`

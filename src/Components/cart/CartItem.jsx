@@ -55,7 +55,6 @@ const ImageContainer = styled.div`
   height: 180px;
   flex-shrink: 0;
   flex-grow: 0;
-  /* border: 1px solid red; */
   img {
     height: 100%;
     width: 100%;
@@ -67,7 +66,6 @@ const CartItemInfo = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
-  /* border: 1px solid red; */
   flex-grow: 1;
 `;
 
@@ -98,7 +96,6 @@ const CartItemQty = styled.div`
 `;
 
 const CartItemDelBtn = styled.div`
-  /* border: 1px solid red; */
   cursor: pointer;
   color: #007185;
   &:hover {
@@ -108,7 +105,6 @@ const CartItemDelBtn = styled.div`
 
 const CartItemPrice = styled.div`
   width: 80px;
-  /* border: 1px solid red; */
   font-size: 18px;
   font-weight: 700;
   display: flex;

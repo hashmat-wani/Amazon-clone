@@ -88,7 +88,6 @@ const NavLogo = styled.div`
 `;
 
 const NavOptionAddress = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   gap: 4px;
   align-items: center;
@@ -153,7 +152,6 @@ const NavItems = styled.div`
 const NavOption = styled.div``;
 
 const NavOptionCart = styled.div`
-  /* border: 1px solid red; */
   display: flex;
   align-items: center;
   gap: 4px;

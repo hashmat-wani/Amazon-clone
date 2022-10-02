@@ -65,10 +65,6 @@ const Content = styled.div`
   border-radius: 5px;
   box-shadow: 0 1px 3px gray;
   text-align: center;
-  /* display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between; */
 `;
 
 const AmazonLogo = styled.img`

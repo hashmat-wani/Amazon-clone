@@ -3,8 +3,6 @@ import styled from "styled-components";
 import Product from "./Product";
 import { db } from "../db/firebase";
 import { useEffect } from "react";
-
-//used for new way only
 import { collection, getDocs } from "firebase/firestore";
 
 const Home = () => {
@@ -14,19 +12,6 @@ const Home = () => {
     getProducts();
   }, []);
 
-  //old way to fetch data from firebase
-  // const getProducts = () => {
-  //   db.collection("products").onSnapshot((products) =>
-  //     setProducts(
-  //       products.docs.map((doc) => ({
-  //         id: doc.id,
-  //         ...doc.data(),
-  //       }))
-  //     )
-  //   );
-  // };
-
-  //new way to fetch data from firebase
   const getProducts = () => {
     const productsColl = collection(db, "products");
     getDocs(productsColl).then((snapshot) =>

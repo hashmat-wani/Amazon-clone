@@ -28,6 +28,4 @@ const Title = styled.h1`
   margin-bottom: 8px;
 `;
 
-const ItemsContainer = styled.div`
-  /* border: 1px solid red; */
-`;
+const ItemsContainer = styled.div``;
