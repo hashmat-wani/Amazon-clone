@@ -91,7 +91,7 @@ const NavLogo = styled.div`
 `;
 
 const NavOptionAddress = styled.div`
-  border: 1px solid red;
+  /* border: 1px solid red; */
   display: flex;
   gap: 4px;
   align-items: center;
