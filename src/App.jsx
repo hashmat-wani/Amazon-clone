@@ -9,7 +9,6 @@ import { db } from "./db/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { useEffect } from "react";
 import Login from "./Components/Login";
-import ResponsiveAppBar from "./ResponsiveAppBar";
 
 function App() {
   const [user, setUser] = useState(
@@ -27,11 +26,11 @@ function App() {
 
   useEffect(() => {
     getCartItems();
-  }, [cartItems]);
+  }, []);
   return (
     <Container>
-      {/* <Header cartItems={cartItems} user={user} /> */}
-      <ResponsiveAppBar />
+      <Header cartItems={cartItems} user={user} />
+      {/* <ResponsiveAppBar /> */}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart cartItems={cartItems} />} />
@@ -47,5 +46,6 @@ function App() {
 export default App;
 
 const Container = styled.div`
-  height: 100vh;
+  min-height: 100vh;
+  background-color: #eaeded;
 `;

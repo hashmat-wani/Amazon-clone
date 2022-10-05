@@ -13,6 +13,7 @@ const Login = ({ user, setUser }) => {
       .then((result) => {
         // The signed-in user info.
         const user = result.user;
+        console.log(user);
         const newUser = {
           name: user.displayName,
           email: user.email,
@@ -20,6 +21,7 @@ const Login = ({ user, setUser }) => {
           avatar: user.photoURL,
         };
         localStorage.setItem("user", JSON.stringify(newUser));
+
         setUser(newUser);
 
         nav("/");
@@ -40,7 +42,6 @@ const Login = ({ user, setUser }) => {
     <Container>
       <Content>
         <AmazonLogo src="http://media.corporate-ir.net/media_files/IROL/17/176060/Oct18/Amazon%20logo.PNG" />
-        <h1>{user ? "" : "Sign into Amazon"}</h1>
         <LoginBtn onClick={(e) => handleAuth(e.target.innerText)}>
           {user ? "Sign Out" : "Sign in with Google"}
         </LoginBtn>
@@ -65,6 +66,13 @@ const Content = styled.div`
   border-radius: 5px;
   box-shadow: 0 1px 3px gray;
   text-align: center;
+  display: grid;
+  place-items: center;
+
+  @media (max-width: 767px) {
+    height: 100vh;
+    width: 100%;
+  }
 `;
 
 const AmazonLogo = styled.img`
