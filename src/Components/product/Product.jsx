@@ -181,7 +181,7 @@ const Product = ({
                 />
               </span>
               <span className="self-end text-gray-600 ml-2">
-                ({Math.floor((discount_price / price) * 100)}% off)
+                ({Math.floor(100 - (discount_price / price) * 100)}% off)
               </span>
             </Price>
 
