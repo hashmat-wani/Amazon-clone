@@ -12,7 +12,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
-import Login from "./Login";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -26,9 +25,7 @@ const dashboard = [
 ];
 
 const Header = ({ cartItems, user }) => {
-  console.log(true);
-  const [test, setTest] = React.useState(true);
-  const signInRef = React.useRef(null);
+  // cart count
   const getCartCount = () => cartItems.reduce((ac, el) => ac + el.qty, 0);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
@@ -48,18 +45,13 @@ const Header = ({ cartItems, user }) => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
-  // const test1 = () => {
-  //   setTest(true);
-  //   // console.log(signInRef);
-  //   // signInRef.current.outerHTML = null;
-  //   // console.log(signInRef.current.outerHTML);
-  // };
 
   return (
     <header className="sticky top-0 z-10">
-      <NavTop>
-        <NavLineOne>
+      <Nav>
+        <NavLineOne className="text-xs">
           <NavLeftOptions>
+            {/* mobile design */}
             <BurgerIcon className="flex md:hidden">
               <IconButton
                 sx={{ p: 0 }}
@@ -76,7 +68,7 @@ const Header = ({ cartItems, user }) => {
               >
                 <MenuItem onClick={handleCloseNavMenu}>
                   <Link to="/login">
-                    <Typography className="link text-xs">
+                    <Typography className="link">
                       <OptionLineOne>
                         Hello,{user ? user.name.split(" ")[0] : "sign in"}
                       </OptionLineOne>
@@ -86,22 +78,20 @@ const Header = ({ cartItems, user }) => {
                 </MenuItem>
 
                 <MenuItem onClick={handleCloseNavMenu}>
-                  <Typography className="link text-xs">
+                  <Typography className="link">
                     <OptionLineOne>Returns</OptionLineOne>
                     <OptionLineTwo>& Orders</OptionLineTwo>
                   </Typography>
                 </MenuItem>
               </Menu>
             </BurgerIcon>
-
+            {/* desktop design */}
             <Link to="/">
               <NavLogo>
                 <img alt="brand-logo" src="https://i.imgur.com/7I9Was5.png" />
               </NavLogo>
             </Link>
-          </NavLeftOptions>
 
-          <NavRightOptions className="text-xs">
             <NavOptionAddress>
               <LocationOnIcon />
               <NavOption className="link">
@@ -109,14 +99,17 @@ const Header = ({ cartItems, user }) => {
                 <OptionLineTwo>Select Your Address</OptionLineTwo>
               </NavOption>
             </NavOptionAddress>
+          </NavLeftOptions>
 
-            <NavSearch className="hidden md:flex">
-              <NavSearchInput placeholder="Search Amazon.in" type="text" />
-              <NavSearchIcon>
-                <SearchIcon />
-              </NavSearchIcon>
-            </NavSearch>
+          <NavSearch className="hidden md:flex">
+            <NavSearchInput placeholder="Search Amazon.in" type="text" />
+            <NavSearchIcon>
+              <SearchIcon />
+            </NavSearchIcon>
+          </NavSearch>
 
+          <NavRightOptions>
+            {/* desktop view */}
             <NavItems className="hidden md:flex">
               <NavOption className="link">
                 <Link to="/login" style={{ textDecoration: "none" }}>
@@ -133,6 +126,7 @@ const Header = ({ cartItems, user }) => {
               </NavOption>
             </NavItems>
 
+            {/* mobile view */}
             <UserAvatar className="flex md:hidden">
               <IconButton
                 style={{
@@ -170,6 +164,7 @@ const Header = ({ cartItems, user }) => {
               </Menu>
             </UserAvatar>
 
+            {/* cart */}
             <Link to="/cart">
               <NavOptionCart>
                 <span className="absolute top-0 right-0 md:right-11 h-4 w-4 bg-yellow-400 text-black font-bold rounded-full text-center">
@@ -184,15 +179,17 @@ const Header = ({ cartItems, user }) => {
           </NavRightOptions>
         </NavLineOne>
 
-        {/* NavLineTwo */}
+        {/* Mobile view search */}
         <NavSearch className="flex md:hidden">
           <NavSearchInput placeholder="Search Amazon.in" type="text" />
           <NavSearchIcon>
             <SearchIcon />
           </NavSearchIcon>
         </NavSearch>
-      </NavTop>
-      <NavBottom className=" text-white xs-font text-xs p-2 text-gray flex ">
+      </Nav>
+
+      {/* Dashboard */}
+      <Dashboard className=" text-white xs-font text-xs p-2 text-gray flex ">
         <div className="items-center space-x-3 hidden md:flex">
           <p className="flex items-center space-x-2">
             <MenuIcon fontSize="small" />
@@ -208,14 +205,13 @@ const Header = ({ cartItems, user }) => {
             ? "Deliver to Hashmat - Baramula 193101"
             : "Select a location to see product availability"}
         </p>
-      </NavBottom>
+      </Dashboard>
     </header>
   );
 };
 export default Header;
 
-const NavTop = styled.div`
-  /* position: sticky; */
+const Nav = styled.div`
   z-index: 1;
   top: 0;
   background-color: #131921;
@@ -239,24 +235,6 @@ const NavLeftOptions = styled.div`
   display: flex;
   align-items: center;
   gap: 20px;
-`;
-
-const NavRightOptions = styled.div`
-  display: flex;
-  flex-grow: 1;
-  align-items: center;
-  justify-content: end;
-  gap: 20px;
-`;
-
-const UserAvatar = styled.div``;
-const NavOptionAddress = styled.div`
-  display: flex;
-  gap: 4px;
-  align-items: center;
-  @media (max-width: 767px) {
-    display: none;
-  }
 `;
 
 const NavLogo = styled.div`
@@ -293,11 +271,32 @@ const NavSearchIcon = styled.div`
   align-items: center;
 `;
 
-const OptionLineOne = styled.div``;
+const NavRightOptions = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: end;
+  gap: 20px;
+`;
+
+const UserAvatar = styled.div``;
+
+const NavOptionAddress = styled.div`
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
+
+const OptionLineOne = styled.div`
+  font-size: 12px;
+`;
 
 const OptionLineTwo = styled.div`
   font-weight: 900;
   text-decoration: none;
+  font-size: 12px;
 `;
 
 const NavItems = styled.div`
@@ -314,6 +313,6 @@ const NavOptionCart = styled.div`
   color: white;
 `;
 
-const NavBottom = styled.div`
+const Dashboard = styled.div`
   background-color: #232f3e;
 `;

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Login = ({ user, setUser }) => {
   const nav = useNavigate();
+
   const handleAuth = (val) => (val === "Sign Out" ? logOut() : logIn());
 
   const logIn = () => {
@@ -13,7 +14,6 @@ const Login = ({ user, setUser }) => {
       .then((result) => {
         // The signed-in user info.
         const user = result.user;
-        console.log(user);
         const newUser = {
           name: user.displayName,
           email: user.email,
@@ -21,9 +21,7 @@ const Login = ({ user, setUser }) => {
           avatar: user.photoURL,
         };
         localStorage.setItem("user", JSON.stringify(newUser));
-
         setUser(newUser);
-
         nav("/");
       })
       .catch((err) => alert(err.message));

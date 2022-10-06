@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { db } from "../../db/firebase";
 import { deleteDoc, doc, updateDoc } from "firebase/firestore";
-const CartItem = ({ id, imageUrl, title, qty, price }) => {
+const CartItem = ({ id, image, title, qty, price }) => {
   let options = [];
   for (let i = 1; i <= Math.max(qty, 20); i++) {
     options.push(<option value={i}>Qty: {i}</option>);
@@ -19,7 +19,7 @@ const CartItem = ({ id, imageUrl, title, qty, price }) => {
   return (
     <Container>
       <ImageContainer>
-        <img alt="cart-avatar" src={imageUrl} />
+        <img alt="cart-avatar" src={image} />
       </ImageContainer>
       <CartItemInfo>
         <CartItemInfoTop>

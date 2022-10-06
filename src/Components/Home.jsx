@@ -1,31 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
-import Product from "./Product";
-import { db } from "../db/firebase";
-import { useEffect } from "react";
-import { collection, getDocs } from "firebase/firestore";
+import Product from "./product/Product";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 
-const Home = () => {
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    getProducts();
-  }, []);
-
-  const getProducts = () => {
-    const productsColl = collection(db, "products");
-    getDocs(productsColl).then((snapshot) =>
-      setProducts(
-        snapshot.docs.map((pro) => ({
-          id: pro.id,
-          ...pro.data(),
-        }))
-      )
-    );
-  };
-
+const Home = ({ products }) => {
   return (
     <Container>
       <Banner>
@@ -35,7 +14,6 @@ const Home = () => {
           showStatus={false}
           showThumbs={false}
           showIndicators={false}
-          interval={5000}
         >
           <div>
             <img loading="lazy" src="https://i.imgur.com/SYHeuYM.jpg" alt="" />
