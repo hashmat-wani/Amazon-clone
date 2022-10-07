@@ -1,20 +1,22 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { db } from "../../db/firebase";
-import { deleteDoc, doc, updateDoc } from "firebase/firestore";
+import { changeCartItemQty, deleteFromCart } from "../../redux/cartSlice";
+
 const CartItem = ({ id, image, title, qty, price }) => {
   let options = [];
   for (let i = 1; i <= Math.max(qty, 20); i++) {
-    options.push(<option value={i}>Qty: {i}</option>);
+    options.push(
+      <option key={i} value={i}>
+        Qty: {i}
+      </option>
+    );
   }
 
-  const qtyItemDoc = doc(db, "cartitems", id);
+  const dispatch = useDispatch();
+  const changeQty = (newQty) => dispatch(changeCartItemQty(id, newQty));
 
-  const changeQty = (newQty) => updateDoc(qtyItemDoc, { qty: +newQty });
-
-  const deleteCartItem = () => {
-    deleteDoc(qtyItemDoc);
-  };
+  const deleteCartItem = () => dispatch(deleteFromCart(id));
 
   return (
     <Container>

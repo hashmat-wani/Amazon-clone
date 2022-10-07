@@ -4,33 +4,33 @@ import StarIcon from "@mui/icons-material/Star";
 import StarHalfIcon from "@mui/icons-material/StarHalf";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
 import { v4 as uuidv4 } from "uuid";
-import { db } from "../../db/firebase";
 import { NumericFormat } from "react-number-format";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { addToCart } from "../../redux/cartSlice";
+import { useDispatch } from "react-redux";
 
-import {
-  setDoc,
-  doc,
-  getDoc,
-  updateDoc,
-  collection,
-  increment,
-} from "firebase/firestore";
+const Product = (props) => {
+  const {
+    title,
+    price,
+    qty,
+    discount_price,
+    rating,
+    image,
+    prime,
+    first_delivery_free,
+    delivery_duration,
+    tag,
+    coupon,
+  } = props;
 
-const Product = ({
-  id,
-  title,
-  price,
-  qty,
-  discount_price,
-  rating,
-  image,
-  prime,
-  first_delivery_free,
-  delivery_duration,
-  tag,
-  coupon,
-}) => {
+  //dispatching addToCart function to add product to cart and update redux store
+  const dispatch = useDispatch();
+  const addItemToCart = () => {
+    console.log("clicked");
+    dispatch(addToCart(props));
+  };
+
   // Delivery Date
   const weekday = [
     "Sunday",
@@ -90,28 +90,10 @@ const Product = ({
   //  for rating
   let ratingFlag = rating % 1 !== 0 ? true : false;
 
-  // fetching cart data first to check if its already present
-  const cartColl = collection(db, "cartitems");
-  const addToCart = (id) => {
-    const cartItemDoc = doc(db, "cartitems", id);
-    getDoc(cartItemDoc).then((docSnap) => {
-      if (docSnap.exists()) {
-        updateDoc(cartItemDoc, { qty: increment(1) });
-      } else {
-        setDoc(doc(cartColl, id), {
-          title,
-          price,
-          image,
-          qty: 1,
-        });
-      }
-    });
-  };
-
   return (
     <Container className="relative">
       {/* product tag */}
-      {tag !== "false" ? (
+      {tag !== "false" && qty !== 0 && (
         <Tag
           tag={tag}
           className="absolute top-0 left-0 text-xs py-1 px-2 font-medium rounded-br-xl"
@@ -125,7 +107,7 @@ const Product = ({
           </span>
           {tag === "amazon_choice" ? " Choice" : null}
         </Tag>
-      ) : null}
+      )}
 
       {/* product image */}
       <ProductImage>
@@ -245,8 +227,11 @@ const Product = ({
 
         {/* add to cart section */}
         {qty !== 0 && (
-          <ActionSection className="border absolute bottom-0 right-0 px-5 py-1 cursor-pointer">
-            <AddShoppingCartIcon onClick={() => addToCart(id)} />
+          <ActionSection
+            onClick={addItemToCart}
+            className="border absolute bottom-0 right-0 px-5 py-1 cursor-pointer"
+          >
+            <AddShoppingCartIcon />
           </ActionSection>
         )}
       </ProductDetails>
@@ -292,7 +277,6 @@ const Rating = styled.div`
 `;
 
 const ActionSection = styled.div`
-  align-self: flex-start;
   background-color: #ffd814;
 `;
 

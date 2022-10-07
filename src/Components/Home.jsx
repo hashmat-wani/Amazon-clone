@@ -3,8 +3,12 @@ import styled from "styled-components";
 import Product from "./product/Product";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { useSelector } from "react-redux";
 
-const Home = ({ products }) => {
+const Home = () => {
+  // fetching products from redux store
+  const { products } = useSelector((state) => state.productsReducer);
+
   return (
     <Container>
       <Banner>

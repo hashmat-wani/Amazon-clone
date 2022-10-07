@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { NumericFormat } from "react-number-format";
+import { useSelector } from "react-redux";
 
-const CartTotal = ({ cartItems }) => {
+const CartTotal = () => {
+  const { cartProducts } = useSelector((state) => state.cartReducer);
   const getTotalPrice = () =>
-    cartItems.reduce((ac, el) => ac + el.qty * el.price, 0);
+    cartProducts.reduce((ac, el) => ac + el.qty * el.price, 0);
 
-  const getCartCount = () => cartItems.reduce((ac, el) => ac + el.qty, 0);
+  const getCartCount = () => cartProducts.reduce((ac, el) => ac + el.qty, 0);
 
   return (
     <Container>

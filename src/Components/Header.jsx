@@ -12,6 +12,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import Person2OutlinedIcon from "@mui/icons-material/Person2Outlined";
+import { useSelector } from "react-redux";
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -24,9 +25,10 @@ const dashboard = [
   "Baby",
 ];
 
-const Header = ({ cartItems, user }) => {
+const Header = ({ user }) => {
+  const { cartProducts } = useSelector((state) => state.cartReducer);
   // cart count
-  const getCartCount = () => cartItems.reduce((ac, el) => ac + el.qty, 0);
+  const getCartCount = () => cartProducts.reduce((ac, el) => ac + el.qty, 0);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -134,7 +136,7 @@ const Header = ({ cartItems, user }) => {
                 }}
                 onClick={handleOpenUserMenu}
               >
-                <p class="text-white font-bold text-xs flex">
+                <p className="text-white font-bold text-xs flex">
                   {user ? user.name.split(" ")[0] : "Sign in"}
                   <KeyboardArrowRightIcon
                     sx={{ width: 18, height: 18 }}
@@ -195,8 +197,10 @@ const Header = ({ cartItems, user }) => {
             <MenuIcon fontSize="small" />
             All
           </p>
-          {dashboard.map((el) => (
-            <p className="link">{el}</p>
+          {dashboard.map((el, i) => (
+            <p key={i} className="link">
+              {el}
+            </p>
           ))}
         </div>
         <p className="flex md:hidden items-center">

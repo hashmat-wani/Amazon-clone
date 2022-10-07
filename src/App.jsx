@@ -5,11 +5,12 @@ import Home from "./Components/Home";
 import { Routes, Route } from "react-router-dom";
 import styled from "styled-components";
 import { useState } from "react";
-import { db } from "./db/firebase";
-import { collection, getDocs } from "firebase/firestore";
 import { useEffect } from "react";
 import Login from "./Components/Login";
 import AddProduct from "./Components/product/AddProduct";
+import { fetchProducts } from "./redux/productsSlice";
+import { fetchCartProducts } from "./redux/cartSlice";
+import { useDispatch } from "react-redux";
 
 function App() {
   // to keep user logged in always.
@@ -17,51 +18,29 @@ function App() {
     JSON.parse(localStorage.getItem("user")) || null
   );
 
-  const [products, setProducts] = useState([]);
-
-  //api call to fetch products data
+  const dispatch = useDispatch();
+  //dispatching fetchProducts function to fetch products and store in redux store
   useEffect(() => {
-    getProducts();
+    dispatch(fetchProducts());
   }, []);
 
-  const getProducts = () => {
-    const productsColl = collection(db, "products");
-    getDocs(productsColl).then((snapshot) =>
-      setProducts(
-        snapshot.docs.map((pro) => ({
-          id: pro.id,
-          ...pro.data(),
-        }))
-      )
-    );
-  };
-
-  const [cartItems, setCartItems] = useState([]);
-  const cartColl = collection(db, "cartitems");
+  // const [cartItems, setCartItems] = useState([]);
   //api call to fetch cart data
   useEffect(() => {
-    getCartItems();
+    dispatch(fetchCartProducts());
   }, []);
-  const getCartItems = () => {
-    getDocs(cartColl).then((snapshot) => {
-      setCartItems(snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })));
-    });
-  };
 
   return (
     <Container>
-      <Header cartItems={cartItems} user={user} />
+      <Header user={user} />
       <Routes>
-        <Route path="/" element={<Home products={products} />} />
-        <Route path="/cart" element={<Cart cartItems={cartItems} />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/cart" element={<Cart />} />
         <Route
           path="/login"
           element={<Login user={user} setUser={setUser} />}
         />
-        <Route
-          path="/addproduct"
-          element={<AddProduct products={products} />}
-        />
+        <Route path="/addproduct" element={<AddProduct />} />
       </Routes>
     </Container>
   );

@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { db } from "../../db/firebase";
 import { setDoc, doc, collection } from "firebase/firestore";
+import { useSelector } from "react-redux";
 
-const AddProduct = ({ products }) => {
+const AddProduct = () => {
+  const { products } = useSelector((state) => state.productsReducer);
+
   const [productDetails, setProductDetails] = useState({
     category: [],
   });
@@ -45,7 +48,6 @@ const AddProduct = ({ products }) => {
 
   const addProduct = async (e) => {
     e.preventDefault();
-    console.log("adding");
     setDoc(doc(productsColl, String(products.length + 1)), productDetails, {
       merge: true,
     })
@@ -58,8 +60,8 @@ const AddProduct = ({ products }) => {
         <fieldset>
           <legend>Add Product Details</legend>
           <h4>Category:</h4>
-          {categories.map((cat) => (
-            <Input>
+          {categories.map((cat, i) => (
+            <Input key={i}>
               <input
                 onInput={handleFormData}
                 type="checkbox"
@@ -142,8 +144,8 @@ const AddProduct = ({ products }) => {
 
           <h4>Tag:</h4>
 
-          {tags.map((tag) => (
-            <Input>
+          {tags.map((tag, i) => (
+            <Input key={i}>
               <input
                 onInput={handleFormData}
                 type="radio"
