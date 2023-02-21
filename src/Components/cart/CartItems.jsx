@@ -31,7 +31,7 @@ const Container = styled.div`
   margin-bottom: 40px;
 `;
 
-const Title = styled.h1`
+const Title = styled.h2`
   margin-bottom: 8px;
 `;
 
