@@ -346,10 +346,9 @@ const Dashboard = styled.div`
 `;
 
 const AddProduct = styled.button`
-  background-color: #f0c14b;
+  background-color: #f0b829;
   border: 2px solid #a88734;
-  font-size: 14px;
   border-radius: 4px;
-  padding: 8px;
+  padding: 3px 8px;
   cursor: pointer;
 `;
